@@ -1,0 +1,27 @@
+<template >
+    <template if:true={showCompoent}>
+    <div class="slds-tabs_default slds-tabs_medium" style="background:#ffffff;border-radius:5px;padding:17px;border:1px solid #cccccc">
+        <ul class="slds-tabs_default__nav" role="tablist">
+           <li class="slds-tabs_default__item slds-is-active" title="Content (Agile Document)" role="presentation">
+              <p class="slds-tabs_default__link" role="tab" tabindex="0" id="tab-default-1__item">Content (Agile Document)</p>
+           </li>
+        </ul>
+        <div id="tab-default-1" class="slds-tabs_default__content slds-show" role="tabpanel" aria-labelledby="tab-default-1__item">
+            <div class="slds-align_absolute-center">
+                <template if:true={showDownloadBtn}>
+                    <lightning-button onclick={initDownload} variant="brand" label={buttonLabel} title="Download agile document" icon-name="utility:download" class="slds-m-left_x-small" disabled={isButtonDisabled}></lightning-button>
+                </template>
+                <template if:true={showSpinner}>
+                    <div style="height:70px">
+                        <lightning-spinner></lightning-spinner>
+                    </div>
+                </template>
+            </div>
+            <div style="display:none">
+                <input type="text" data-id="recIdInput" value={recordId}></input>
+                <a></a>
+            </div>
+        </div>
+     </div>
+    </template>
+</template>

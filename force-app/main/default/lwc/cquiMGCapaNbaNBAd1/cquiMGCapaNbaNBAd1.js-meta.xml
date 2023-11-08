@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="cquiMGCapaNbaNBAd1">
+    <apiVersion>53.0</apiVersion>
+    <isExposed>false</isExposed>
+    <masterLabel>CQUI MG Capa Nba NBAd1</masterLabel>
+</LightningComponentBundle>

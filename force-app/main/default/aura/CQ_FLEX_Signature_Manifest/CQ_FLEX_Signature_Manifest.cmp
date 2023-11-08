@@ -1,0 +1,6 @@
+<!--********************************** Revision History ************************************************************
+* 1.[FLEX-162] Document - Signature Manifest
+*********************************** Revision History **************************************************************-->
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" access="global">
+    <aura:handler name="init" action="{!c.openPage}" value="{!this}" />
+</aura:component>

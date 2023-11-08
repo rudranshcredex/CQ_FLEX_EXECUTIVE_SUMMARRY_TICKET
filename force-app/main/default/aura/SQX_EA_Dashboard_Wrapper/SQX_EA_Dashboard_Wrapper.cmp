@@ -1,0 +1,7 @@
+<aura:component implements="force:hasRecordId,forceCommunity:availableForAllPageTypes" controller="SQX_EA_Dashboard_Wrapper" access="global"  extends="compliancequest.SQX_Lightning_Base_Component">
+    <aura:attribute name="developerName" type="String" description="holds the EA Dashboard DeveloperName"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    <aura:if isTrue="{!v.developerName}">
+        <wave:waveDashboard developerName="{!v.developerName}" height="550"  showTitle="false" showSharing="false" showHeader="false"/>
+    </aura:if>
+</aura:component>

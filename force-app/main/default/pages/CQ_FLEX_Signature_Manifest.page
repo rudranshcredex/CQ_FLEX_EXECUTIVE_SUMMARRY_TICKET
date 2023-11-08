@@ -1,0 +1,350 @@
+<!--********************************** Revision History ************************************************************
+* 1.[FLEX-17] Documents - Signature Manifest
+* 2.[FLEX-128] Documents- Signature manifest changes
+* 3.[FLEX-151] Documents - Signature Manifest contd
+* 4.[FLEX-157] Documents - Signature Manifest contd - Obsolescence Workflow
+* 5.[FLEX-162] Document - Signature Manifest
+* 6.[FLEX-179] Document - Signature Manifest
+* 7.[FLEX-186] Documents - Signature Manifest
+* 8.[FLEX-245] Documents - Signature Manifest overlapping
+*********************************** Revision History **************************************************************-->
+<apex:page renderAs="pdf" standardController="compliancequest__SQX_Controlled_Document__c" extensions="CQ_FLEX_Ext_Signature_Manifest" title="{!compliancequest__SQX_Controlled_Document__c.Name}" doctype="html-5.0" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="true">
+    
+    <apex:variable var="i" value="{!1}" />
+    <apex:variable var="j" value="{!1}" />
+    <head>
+        <style>
+            @page {
+            size : {!IF(false, 'A4 landscape', 'A4 portrait')};
+            @top-center {
+            content: element(header);
+            }
+            @bottom-left {
+            content: element(footer);
+            }
+            margin: '0.5in .42in 0.2in .45in';
+            
+            }
+            .fs {
+            
+            -fs-table-paginate: paginate;           
+            }        
+            
+            
+            .label {  text-align: right; }
+            .fieldValue {padding-left:3px;}            
+            .subSection {
+            background-color: transparent;
+            }            
+            .subSection h3 { font-size: 1.2em; padding: 5px 12px; }            
+            
+            .noRecordToDisplay { padding: 5px 0px; border-width: 1px 0; border-top-color: #4a4a56; border-bottom-color:#d4dadc; border-style:solid; }            
+            .top { text-align: left;  margin-bottom: 10px; width:100%}            
+            .logo{margin:0px 0px 10px 0px !important; border: 1px solid black; width:100%}
+            
+            
+            
+            .hidden{display:none}
+            
+            
+            .logo-image{text-align: left; margin: 1px 0px 0px 10px !important; width:70%}
+            .pagenumber:before {
+            content: counter(page);
+            text-align: right;
+            }
+            .pagecount:before {
+            content: counter(pages);
+            text-align: right;
+            }
+            .thead_style
+            {
+            height:70px;        
+            }            
+            .tfoot_style
+            {
+            height:30px;
+            }
+            table td { 
+            word-break: break-all;            
+            }
+            .column{
+            width:30%;
+            }
+            .column2{
+            width:70%;
+            }
+            .Headings{
+            width:30%;
+            text-align: left;
+            vertical-align: top;
+            }
+            
+            
+        </style>
+    </head>
+    <body>    
+        <div style="position: fixed;top: 0mm;width: 100%;height: 100px;">     
+            <table  width="100%" border="1px" cellpadding="3px" cellspacing="0">
+                <tr>
+                    
+                    <td width="30%" rowspan="2"><apex:image width="50%" url="{!$Resource.Flex_Logo}"/></td>
+                    <td  align="right" style="vertical-align: top;">
+                        Signature Manifest is created and signed in ComplianceQuest(CQ) <br/>
+                    </td>
+                    
+                    
+                </tr>
+                <tr>
+                    
+                    <td  align="left" style="vertical-align: bottom;">
+                        Date Generated:<apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                        <apex:param value="{!Now()+offset}"/>
+                        </apex:outputText>{!usertimezone} 
+                        
+                    </td>
+                </tr>
+                
+            </table>
+            
+        </div>
+        <table class="fs">
+            
+            <thead>
+                <tr>
+                    <td  class="thead_style">
+                    </td>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td>        
+                        <div>
+                            <table>
+                                
+                                <tr>
+                                    <td colspan = "2" class="column">  
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Revision__c.Label} :                              
+                                            {!compliancequest__SQX_Controlled_Document__c.compliancequest__Revision__c}</b>
+                                        
+                                    </td>  
+                                    <td style='text-align: right;'  class="column2">  
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td colspan = "2"  class="column">  
+                                        <b> Document Information</b>
+                                    </td>  
+                                    <td  class="column2">
+                                        
+                                        CQ Signature Manifest
+                                        
+                                    </td>
+                                </tr>                                    
+                                <tr>
+                                    <td colspan = "2" class="column">  
+                                        
+                                    </td>  
+                                    <td class="column">
+                                        <b>{!$label.CQ_FLEX_DocInfoStmt}</b>
+                                        <br/> <br/>
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Document_Number__c.Label}:</b>                              
+                                        {!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Number__c}                                
+                                        <br/>
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Revision__c.Label}: </b>{!compliancequest__SQX_Controlled_Document__c.compliancequest__Revision__c}
+                                        <br/>
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Title__c.Label}: </b>
+                                        {!compliancequest__SQX_Controlled_Document__c.compliancequest__Title__c}    
+                                        <br/>                                
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Document_Status__c.Label}: </b>{!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c}
+                                        <br/>  <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan = "2" class="column">  
+                                        
+                                    </td> 
+                                    <td class="column">
+                                        
+                                        
+                                        <b>{!$label.CQ_FLEX_Document_Name_Filename}: </b>{!compliancequest__SQX_Controlled_Document__c.compliancequest__Title__c}.{!Extension} 
+                                        <br/>
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.CQ_FLEX_Parent_Category__c.Label}: </b>{!compliancequest__SQX_Controlled_Document__c.CQ_FLEX_Parent_Category__c}
+                                        <br/>
+                                        
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Document_Category__c.Label}: </b>{!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Category__c}
+                                        <br/>    
+                                        <b>{!$label.CQ_FLEX_Owner}: </b>
+                                        {!compliancequest__SQX_Controlled_Document__c.Owner.name}/{!compliancequest__SQX_Controlled_Document__c.Owner.username}
+                                        <br/>
+                                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Changes__c.Label}: </b>                              
+                                        {!compliancequest__SQX_Controlled_Document__c.compliancequest__Changes__c}                                
+                                        <br/> <br/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan = "2" class="column">  
+                                        
+                                    </td> 
+                                    <td class="column2">
+                                        <b>Approved Date/Time: </b>
+                                        <apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                                            <apex:param value="{!Approveddate+offset}"/>
+                                        </apex:outputText>  {!usertimezone}<br/>                                       
+                                        <apex:outputPanel rendered="{!NOT(ISNULL(compliancequest__SQX_Controlled_Document__c.CQ_FLEX_Effective_Date_Time__c))}">
+                                            <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Effective_Date__c.Label}/Time: </b>
+                                            <apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                                                <apex:param value="{!compliancequest__SQX_Controlled_Document__c.CQ_FLEX_Effective_Date_Time__c+offset}"/>
+                                            </apex:outputText>  {!usertimezone}
+                                            <br/></apex:outputPanel>     
+                                        <apex:outputPanel rendered="{!NOT(ISNULL(compliancequest__SQX_Controlled_Document__c.CQ_FLEX_Expiration_Date_Time__c))}">
+                                            <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.CQ_FLEX_Expiration_Date_Time__c.Label}: </b>
+                                            <apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                                                <apex:param value="{!compliancequest__SQX_Controlled_Document__c.CQ_FLEX_Expiration_Date_Time__c+offset}"/>
+                                            </apex:outputText>  {!usertimezone}
+                                            <br/>
+                                        </apex:outputPanel>
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <apex:outputPanel rendered="{!NOT(ISNULL(Record_submitforapproval))}">
+                                <table>                                    
+                                    <tr>
+                                        <td  colspan = "2"  class="Headings">  
+                                            <b>Document Initiator: </b> 
+                                        </td>                                             
+                                        <td class="column2">
+                                            Name: {!Record_submitforapproval[0].Actor.name}/{!Record_submitforapproval[0].Actor.username}<br/>
+                                            Reason: {!$label.CQ_FLEX_Submitting_Record_for_Approval}<br/>
+                                            Creation Date/Time: <apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                                            <apex:param value="{!Record_submitforapproval[0].createddate+offset}"/>
+                                            </apex:outputText>{!usertimezone}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </apex:outputPanel> 
+                            
+                            <apex:outputPanel rendered="{!NOT(ISNULL(Record_approval_steps))}"> 
+                                
+                                <apex:repeat value="{!Record_approval_steps}" var="var">
+                                    <apex:outputpanel rendered="{!(CONTAINS(var.ProcessNode.Name,'Approval Step') && NOT(CONTAINS(var.ProcessNode.Name,'Obsolescence Approval Step')))}">
+                                        <table>
+                                            <tr>                                                
+                                                <td  colspan = "2" class="Headings">  
+                                                    <b>{!var.ProcessNode.Name}{!$label.CQ_FLEX_Reviewed_Approved}</b> 
+                                                </td> 
+                                                
+                                                <td class="column2">
+                                                    Name: {!var.Actor.Name}/{!var.Actor.username}<br/>
+                                                    Reason: {!$label.CQ_FLEX_Approving_Record}<br/>
+                                                    Creation Date/Time: <apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                                                    <apex:param value="{!var.createddate+offset}"/>
+                                                    </apex:outputText>{!usertimezone}                                                    
+                                                </td>                                                
+                                            </tr>
+                                        </table>
+                                    </apex:outputpanel>
+                                </apex:repeat>
+                                
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c=='Pre-Expire' || compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c=='Obsolete'}"> 
+                                 
+                                <table width="100%">
+                                    <tr>                                        
+                                        <td style="text-align:center;">                                              
+                                           <b>{!$Label.CQ_FLEX_Obsolescence_Workflow}</b>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </apex:outputPanel>  
+                            <apex:outputPanel rendered="{!(Record_submitforapproval.size==1)&&(compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c=='Pre-Expire' || compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c=='Obsolete')}">                                
+                                <table width="100%">
+                                    <tr>                                        
+                                        <td style='text-align: center;'>  
+                                            <br/> <b>{!$label.CQ_FLEX_Obsolescence_statement}{!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Number__c} [{!rev}]{!$label.CQ_FLEX_Obsolescence_Stmt_OtherHalf}</b>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!(NOT(ISNULL(Record_submitforapproval)) && (Record_submitforapproval.size>1))}">   
+                                <table>
+                                    <tr>
+                                        <td  colspan = "2"  class="Headings">  
+                                            <b>{!$label.CQ_FLEX_Document_Obsolescence_Initiator}</b> 
+                                        </td> 
+                                        
+                                        <td class="column2">
+                                            Name: {!Record_submitforapproval[1].Actor.name}/{!Record_submitforapproval[1].Actor.username}<br/>
+                                            Reason: {!$label.CQ_FLEX_Submitting_Record_for_Obsolescence}<br/>
+                                            Creation Date/Time: <apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                                            <apex:param value="{!Record_submitforapproval[1].createddate+offset}"/>
+                                            </apex:outputText>{!usertimezone}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel rendered="{!NOT(ISNULL(Record_approval_steps))}">      
+                                <apex:repeat value="{!Record_approval_steps}" var="var">
+                                    <apex:outputpanel rendered="{!(CONTAINS(var.ProcessNode.Name,'Obsolescence Approval Step'))}">
+                                        <table> 
+                                            <tr>                                                
+                                                <td  colspan = "2" class="Headings">  
+                                                    <b>{!var.ProcessNode.Name}{!$label.CQ_FLEX_Reviewed_Approved}</b> 
+                                                </td> 
+                                                
+                                                <td class="column2">
+                                                    Name: {!var.Actor.Name}/{!var.Actor.username}<br/>
+                                                    Reason: {!$label.CQ_FLEX_Approving_Record_for_Obsolescence}<br/>
+                                                    Creation Date/Time: <apex:outputText value="{0, date, dd MMM yyyy, hh:mm a}">
+                                                    <apex:param value="{!var.createddate+offset}"/>
+                                                    </apex:outputText>{!usertimezone}                                                    
+                                                </td>                                                
+                                            </tr>
+                                        </table>
+                                    </apex:outputpanel>
+                                </apex:repeat>
+                            </apex:outputPanel>
+                            
+                            
+                            <table width="100%" >
+                                <tr>                                    
+                                    <td style='text-align: center;'>  
+                                        <p>
+                                            <b>{!$label.CQ_FLEX_EOD}</b>  
+                                        </p>
+                                    </td>
+                                </tr>                                    
+                            </table>    
+                            
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                    <td class="tfoot_style">
+                        
+                    </td>
+                </tr>
+            </tfoot>
+            
+        </table>            
+        <div style="position: fixed;bottom: 0mm;width: 18cm;height: 40px;">
+            
+            <table  width="100%" style='border-top: 2px solid black;' cellpadding="3px" cellspacing="0">
+                
+                <tr>
+                    <td style="text-align:right;">Page <span class="pagenumber"/> of <span class="pagecount"/></td>
+                </tr>
+            </table>
+            
+        </div>           
+        
+    </body>    
+</apex:page>

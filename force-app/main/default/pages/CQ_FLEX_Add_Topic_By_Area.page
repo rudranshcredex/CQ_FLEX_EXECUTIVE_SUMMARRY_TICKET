@@ -1,0 +1,85 @@
+<!--********************************** Revision History ************************************************************
+*1.[FLEX-52]-Documents - Area configuration continued
+*********************************** Revision History **************************************************************-->
+<apex:page standardcontroller="compliancequest__SQX_Controlled_Document__c" extensions="CQ_FLEX_Add_TopicBy_Area_Controller" showHeader="false" sidebar="false" tabStyle="compliancequest__SQX_Controlled_Document__c" lightningStylesheets="false">
+    <style>
+        .myTable {
+        counter-reset: rowCounter;
+        }
+        .myTable .row {
+        counter-increment: rowCounter;
+        }
+        .myTable .row .counter::before {
+        content: counter(rowCounter);
+        }
+        body .bPageBlock .pbBody .grey .pbSubheader{
+                background-color:#f3f3f3;
+        		Font: 16px -apple-system;
+        		color:#181818 !important;
+        		font-weight:bold ;	
+            }
+        
+        .rg1 {background-color: lightblue; color:black; background-image:none}
+        .rg2 {background-color: white; color:black; background-image:none}
+        .SelectlistStyle {background-color: lightblue; color:black; font-size: 100%; background-image:none}
+        .myClass{
+        color:white !important;
+        background: #66b3ff !important;
+        }
+   </style> 
+     <apex:form id="form">   
+        
+        <apex:pageBlock id="details"  title="{!compliancequest__SQX_Controlled_Document__c.name}">            
+            <apex:pageBlockButtons location="top">
+                <div class="slds-float_right">
+                    <b></b> 
+                     <apex:outputPanel id="op1"> 
+                        <apex:commandButton value="Close" styleClass="slds-button slds-button_neutral" action="{!cancel_goback}" status="Sataus" rerender="op1,op2"/>
+                    </apex:outputPanel>                   
+                    <apex:commandButton value="Save" styleClass="slds-button slds-button_brand"  action="{!processSelected}" reRender="table2" status="Sata"/>
+                    <apex:actionStatus id="Sata">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                                &nbsp;
+                            </div>
+                            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 350px;">
+                                    <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                                    <span style=" padding: 10px 0px;"><div>Please Wait until selected Areas are created......</div></span>
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>                    
+                   
+                </div>                             
+            </apex:pageBlockButtons>
+            <div class="slds-form-element__control">
+                <apex:inputText value="{!searchstring}" styleClass="slds-input" html-placeholder="Search Area">Search Area</apex:inputText> 
+                <apex:commandButton value="Search" styleClass="slds-button slds-button_neutral" action="{!searchAreas}" reRender="details,table"/>                
+            </div>
+            <br/>             
+            
+            
+            <apex:pageBlockTable value="{!wrapJFList}" var="lnsWrap" styleClass="slds-table slds-table_cell-buffer slds-table_bordered slds-var-m-bottom_x-small" id="table" rowClasses="row">                   
+                <apex:slds />  
+                <apex:column styleClass="slds-truncate" value="{!lnsWrap.lns.Name}"/>
+                <apex:column value="{!lnsWrap.lns.compliancequest__SQX_Business_Unit__r.name}"/>
+                <apex:column value="{!lnsWrap.lns.CQ_FLEX_Site__c}"/>            
+                <apex:column >
+                    <apex:facet name="header">
+                        Area Selected
+                    </apex:facet>
+                    &nbsp;&nbsp;<apex:inputCheckbox value="{!lnsWrap.selected}"  id="inputId"/>
+                </apex:column> 
+            </apex:pageBlockTable> 
+            
+            <br/>
+            <div class="slds-align_absolute-center">            
+                <!--apex:commandButton value="First" styleClass="slds-button slds-button--brand" action="{!FirstPage}" disabled="{!prev}" reRender="details,table" /-->
+                <apex:commandButton value="Previous" styleClass="slds-button slds-button_neutral" action="{!previous}" disabled="{!prev}" reRender="details,table" />
+                <apex:commandButton value="Next" styleClass="slds-button slds-button_neutral" action="{!next}" disabled="{!nxt}" reRender="details,table" />
+                <!--apex:commandButton value="End" styleClass="slds-button slds-button--brand" action="{!LastPage}" disabled="{!nxt}" reRender="details,table" /-->
+            </div>
+        </apex:pageBlock> 
+    </apex:form>    
+</apex:page>

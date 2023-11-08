@@ -1,0 +1,7 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId">    
+    <aura:attribute name="variant" type="String" default="linear"/>
+    <lightning:path aura:id="path" recordId="{!v.recordId}"
+                    variant="{!v.variant}"
+                    hideUpdateButton="true"
+                    />
+</aura:component>

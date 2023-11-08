@@ -1,0 +1,124 @@
+<template>
+    
+    <c-cq-record-form-container has-loaded={allDone} hide-save={hideSave} title={pageTitle} onsave={saveRecord} oncancel={cancelForm} onsaveandnew={saveAndNewForm} is-saving={isSaving}
+    main-obj={objInfo} form-errors={formErrors} lightning-icon="" save-and-new="true">
+        <div slot="sections" class="slds-col slds-size_1-of-1">
+                    
+                
+                   
+        <template if:true={sectionHider.expando_unique_id_1}>
+            <c-cq-record-form-section section-title={CQFLEX_INFORMATION} expando-unique-id="expando-unique-id-1" edit-heading="true" detail-heading="false">
+                <div slot="sectionsItem">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__SQX_INVESTIGATION__C} value={v_COMPLIANCEQUEST__SQX_INVESTIGATION__C}
+                                            display-value={d_COMPLIANCEQUEST__SQX_INVESTIGATION__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Required">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_RECORDTYPEID} value={v_RECORDTYPEID}
+                                            display-value={d_RECORDTYPEID} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Readonly">
+                                </c-cq-form-item>
+                                
+                            </div>
+                         
+                    </div>
+                </div>
+            </c-cq-record-form-section>
+        </template>
+                 
+            
+                
+                   
+        <template if:true={sectionHider.expando_unique_id_2}>
+            <c-cq-record-form-section section-title={CQFLEX_METHOD} expando-unique-id="expando-unique-id-2" edit-heading="true" detail-heading="true">
+                <div slot="sectionsItem">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__INVESTIGATION_TOOL_METHOD_USED__C} value={v_COMPLIANCEQUEST__INVESTIGATION_TOOL_METHOD_USED__C}
+                                            display-value={d_COMPLIANCEQUEST__INVESTIGATION_TOOL_METHOD_USED__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Required">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_CQ_FLEX_DESCRIPTION_TEAM_MEMBER__C} value={v_CQ_FLEX_DESCRIPTION_TEAM_MEMBER__C}
+                                            display-value={d_CQ_FLEX_DESCRIPTION_TEAM_MEMBER__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__PROBLEM_STATEMENT__C} value={v_COMPLIANCEQUEST__PROBLEM_STATEMENT__C}
+                                            display-value={d_COMPLIANCEQUEST__PROBLEM_STATEMENT__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                            </div>
+                         
+                    </div>
+                </div>
+            </c-cq-record-form-section>
+        </template>
+                 
+            
+                
+                   
+        <template if:true={sectionHider.expando_unique_id_3}>
+            <c-cq-record-form-section section-title={CQFLEX_CUSTOM_LINKS} expando-unique-id="expando-unique-id-3" edit-heading="true" detail-heading="false">
+                <div slot="sectionsItem">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                         
+                    </div>
+                </div>
+            </c-cq-record-form-section>
+        </template>
+                 
+            
+    
+        
+
+        </div>
+    </c-cq-record-form-container>
+</template>

@@ -1,0 +1,316 @@
+<!-------------------------------------------REVISION HISTORY---------------------------------------------
+ [FLEX-427] Documents - Update Primary Content (File Size Issue)
+--------------------------------------------REVISION HISTORY---------------------------------------------->
+<apex:page applyBodyTag="false" standardController="compliancequest__SQX_Controlled_Document__c" applyHtmlTag="false" showHeader="false">
+    <apex:includeLightning />
+    <apex:slds />
+    <html>
+        <head>
+            <title>Adding concurrently multiple entries in a zip file</title>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jsforce/1.9.1/jsforce.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
+            <script type="text/javascript">__sfdcSessionId = '{!$Api.Session_Id}';</script> 
+            <script src="../../soap/ajax/48.0/connection.js" type="text/javascript"></script>
+            <apex:includeScript value="/soap/ajax/37.0/connection.js" />
+            <apex:includeScript value="/soap/ajax/37.0/apex.js" />
+        </head>
+        <style>
+            .spinner {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 9999;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                border: 3px solid #f3f3f3;
+                border-top: 3px solid #3498db;
+                animation: spin 1s infinite linear;
+            }
+            
+            .toast-message {
+                background-color: #4CAF50;
+                color: #fff;
+                padding: 15px;
+                border-radius: 4px;
+                position: fixed;
+                top: 20px;
+                right: 43%;
+                z-index: 9999;
+            }
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+        <script>
+            window.addEventListener('DOMContentLoaded', function () {
+                var spinner = document.getElementById('spinner');
+                spinner.style.display = 'block'; // Show the spinner
+            });
+        </script>
+        
+        <body>
+            <div id="spinnerContainer" class="spinner-container">
+                <div id="spinner" class="spinner"></div>
+                <span id="spinner-text" class="spinner-text" style = " top: 67%;
+                                                                      position : fixed;
+                                                                      left: 52%;
+                                                                      transform: translate(-50%, -50%);
+                                                                      font-size: 14px;
+                                                                      color: #333;
+                                                                      font-weight: 900;">Loading...</span>
+            </div>
+            <div id="toastMessage" class="toast-message" style="display: none;">
+                Primary Content Updated Successfully.
+            </div>
+            
+            <script type="module">
+            import * as zip from "https://unpkg.com/@zip.js/zip.js/index.js";
+            var pptxFile = null;
+            let cId = `{!$CurrentPage.parameters.cid}`; 
+            let docTitle = `{!$CurrentPage.parameters.title}`;
+            let docNumber = `{!$CurrentPage.parameters.docNumber}`;
+            let docRev = `{!$CurrentPage.parameters.docRev}`;
+            let docSite = `{!$CurrentPage.parameters.docSite}`;
+            let ed = `{!$CurrentPage.parameters.ed}`;
+            let recId = `{!$CurrentPage.parameters.recid}`;
+            getZipFileBlob();
+            
+            async function getZipFileBlob() {
+                let API_VERSION = "v52.0";
+                let API_BASE_PATH = `/services/data/${API_VERSION}`;
+                let AUTH_HEADER = {"Authorization": "Bearer {!$Api.Session_Id}"};
+                let cId = `{!$CurrentPage.parameters.cid}`;
+                let GET_FILE_DETAILS_PATH = `/services/data/v52.0/query?q=SELECT+Id,+FileExtension,Title+FROM+ContentVersion+WHERE+ContentDocumentId+=+'{id}'+ORDER BY createdDate DESC LIMIT 1`;
+                let url = GET_FILE_DETAILS_PATH.replace("{id}", `{!$CurrentPage.parameters.cid}`); 
+                let BLOB_DATA ;
+                // Make a GET request to fetch the ContentVersion record
+                $.ajax({
+                type: "GET",
+                    url: url,
+                        headers: {
+                            "Authorization": "Bearer {!$Api.Session_ID}"
+                        },
+                        success: function (response) {
+                            // Handle successful response
+                            let headers = {
+                                headers: AUTH_HEADER
+                            }
+                            // Process the record as needed
+                            var title = response.records[0].Title;
+                            
+                            let FILE_DOWNLOAD_PATH = `${API_BASE_PATH}/sobjects/ContentVersion/${response.records[0].Id}/VersionData`;
+                            var contentVersionId = response.records[0].Id; // Example ContentVersion ID                       
+                            
+                            fetchVersionData(contentVersionId);    
+                        },
+                        error: function (error) {
+                            // Handle error
+                        }
+                });
+            }
+            
+            async function fetchVersionData(contentVersionId) {
+                showSpinner('Loading Content ....!');
+                
+                const response =  await fetch('/services/data/v53.0/sobjects/ContentVersion/' + contentVersionId + '/VersionData', {
+                    headers: {
+                        'Authorization': 'Bearer {!$Api.Session_ID}',
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'GET'
+                });
+                const blob = await response.blob();
+                if(blob != undefined){
+                    const file = new File([blob], 'filename', {
+                        type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                    });
+                    readData(file); 
+                }    
+            }
+            
+            async function readData(file){
+                showSpinner('Updating headers ....!');
+                const reader = new zip.ZipReader(new zip.BlobReader(file));
+                const entries = await reader.getEntries();
+                if (entries.length) {
+                    entries.forEach(function (entry) {
+                        if (entry.filename === 'ppt/slideMasters/slideMaster1.xml') {
+                            fetchXMLContent(entry, file);
+                        } else {
+                        }
+                    });
+                }                
+                await reader.close();
+            }
+            
+            async function fetchXMLContent(entry, file){
+                var xmlContent = await entry.getData(new zip.TextWriter(), {}); 
+                var parser = new DOMParser();
+                var xmlDoc = parser.parseFromString(xmlContent, "application/xml");
+                var headerTextElement = xmlDoc.getElementsByTagName('a:p');
+                for (var i = 0; i < headerTextElement.length; i++) {
+                    for(var j=0; j<headerTextElement[i].getElementsByTagName('a:r').length;j++){
+                        var currentNode = headerTextElement[i].getElementsByTagName('a:r')[j];
+                        if (headerTextElement[i].getElementsByTagName('a:r')[j].textContent.includes('Document Number')) {
+                            var parentNode = headerTextElement[i];
+							parentNode =  setpptHeaderProperties(xmlDoc, headerTextElement[i], 'Document Number', docNumber);                            
+                        }
+                        else  if (headerTextElement[i].getElementsByTagName('a:r')[j].textContent.includes('Title')) {
+                            parentNode =  setpptHeaderProperties(xmlDoc, headerTextElement[i], 'Title', docTitle); 
+                        }
+                    } 
+                }
+                var xmlString = new XMLSerializer().serializeToString(xmlDoc.documentElement);
+                getZipAsFileBlob(xmlString, file).then(blob => {
+                    var newblob = new File([blob], 'Test Sample PPT.pptx', {type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation'});
+                	downloadFile(blob, newblob);
+                });
+            }
+            
+            async function getZipAsFileBlob(xmlcontent, file) {
+                const reader = new zip.ZipReader(new zip.BlobReader(file));
+                const entries = await reader.getEntries();
+                const zipWriter = new zip.ZipWriter(new zip.BlobWriter("application/zip"));
+                if (entries.length) {
+                    await Promise.all(entries.map(async (entry) => {
+                        if(!entry.filename.includes('.xml') && !entry.filename.includes('.rels')){
+                            var blob = await entry.getData(new zip.BlobWriter(), {});
+                            zipWriter.add(entry.filename, new zip.BlobReader(blob));
+                        }else if(entry.filename === 'ppt/slideMasters/slideMaster1.xml'){
+                            var xml = await entry.getData(new zip.TextWriter(), {});
+                            var xmlPre = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+                            zipWriter.add("ppt/slideMasters/slideMaster1.xml", new zip.TextReader(xmlPre+'\r\n'+xmlcontent));
+                        }
+                        else{
+                            var xml = await entry.getData(new zip.TextWriter(), {});
+                            zipWriter.add(entry.filename, new zip.TextReader(xml));
+                        }
+                    }));
+                }
+                return zipWriter.close();
+            } 
+
+            function setpptHeaderProperties(xmlDoc, parentNode, headerProperty, headerValue) {
+                var childNodesSize = parentNode.childNodes.length - 1;
+                for(var k=childNodesSize;k>0;k--){
+                    if(parentNode.childNodes[k] != undefined){
+                        parentNode.removeChild(parentNode.childNodes[k]);
+                    } 
+                }
+                var childNode2 = xmlDoc.createElement("a:r");
+                var grandchildNode1 = xmlDoc.createElement("a:rPr");
+                grandchildNode1.setAttribute("lang", "en-us");
+                grandchildNode1.setAttribute("sz", "1100");
+                grandchildNode1.setAttribute("b", "0");
+                grandchildNode1.setAttribute("dirty", "0");
+                var grandchildNode1ChildNode = xmlDoc.createElement("a:latin");
+                grandchildNode1ChildNode.setAttribute("typeface", "Times New Roman");
+                grandchildNode1ChildNode.setAttribute("panose", "02020603050405020304");
+                grandchildNode1ChildNode.setAttribute("pitchFamily", "18");
+                grandchildNode1ChildNode.setAttribute("charset", "0");
+                var grandchildNode1ChildNode1 = xmlDoc.createElement("a:cs");
+                grandchildNode1ChildNode1.setAttribute("typeface", "Times New Roman");
+                grandchildNode1ChildNode1.setAttribute("panose", "02020603050405020304");
+                grandchildNode1ChildNode1.setAttribute("pitchFamily", "18");
+                grandchildNode1ChildNode1.setAttribute("charset", "0");
+                grandchildNode1.appendChild(grandchildNode1ChildNode);
+                grandchildNode1.appendChild(grandchildNode1ChildNode1);
+                var grandChildNode2 = xmlDoc.createElement("a:t");
+                var grandChildTwoTextNode;
+                if(headerProperty == 'Document Number'){
+                    grandChildTwoTextNode = xmlDoc.createTextNode("Document Number - "+headerValue+"\t\t\t"+"Revision - "+docRev+"\t\t\t"+"Site - "+docSite);    
+                }else{
+                    grandChildTwoTextNode = xmlDoc.createTextNode(headerProperty+" - "+headerValue+"\t\t\t");        
+                } 
+                grandChildNode2.appendChild(grandChildTwoTextNode);
+                childNode2.appendChild(grandchildNode1);
+                childNode2.appendChild(grandChildNode2);
+                parentNode.appendChild(childNode2);
+                return parentNode;
+            }   
+            
+            async function downloadFile(blob, file) {
+            	uploadFile('Sample PPT.pptx', blob, file, '{!$Api.Session_Id}');
+			}
+            
+            async function uploadFile(filename, blob, file, sessionId){
+                showSpinner('Updating File ....!');
+            	var formdata = new FormData();
+                const metadata = {
+                    'Title': docTitle,
+                    'PathOnClient': docTitle+'.pptx',
+                    'Origin': "H",
+                    'ContentDocumentId': cId
+                };
+                let entityContent = new Blob([JSON.stringify(metadata)], { type: "application/json" });
+                let versionData = new Blob([file], { type: "application/octet-stream" });
+                formdata.append("entity_content", entityContent, "");
+                formdata.append("VersionData", versionData, 'Test PPT.pptx');
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/services/data/v52.0/sobjects/ContentVersion', true);
+            	xhr.setRequestHeader('Accept', '*/*');
+            	xhr.setRequestHeader('Cache-Control', 'no-cache'); 
+            	xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+                xhr.setRequestHeader('Authorization',  'Bearer '+sessionId);
+                xhr.onload = function() {
+                    if (xhr.status === 200 || xhr.status === 201) {
+                        
+                        var spinnerContainer = document.getElementById('spinnerContainer');
+                        spinnerContainer.style.display = 'none';
+                        
+                        // Request succeeded
+                        var contentDocumentLink = new sforce.SObject('ContentDocumentLink');
+                        contentDocumentLink.ContentDocumentId = cId;
+                        contentDocumentLink.LinkedEntityId = recId;
+                        contentDocumentLink.ShareType = 'I'; 
+                        var results2 = sforce.connection.create([contentDocumentLink]);
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        document.body.appendChild(a);
+                        a.download = docTitle+'.pptx';
+                        a.click(); 
+                        hideSpinner();
+                       showToast();
+                    }else {
+                        // Request failed
+                        showSpinner(xhr.responseText);
+                        document.addEventListener("DOMContentLoaded", function() {
+                            var spinnerContainer = document.getElementById('spinnerContainer');
+                            spinnerContainer.style.display = 'none';
+                        });
+                    }
+                };
+                
+            xhr.send(formdata);
+            }
+              
+            function showToast() {
+                var toastElement = document.getElementById('toastMessage');
+                toastElement.style.display = 'block';
+                setTimeout(function() {
+                    toastElement.style.display = 'none';
+                }, 10000); // Hide the toast after 3 seconds
+            }
+            
+            
+            function showSpinner(text) {
+                var spinnerText = document.getElementById('spinner-text');
+                spinnerText.textContent = text;
+            }
+            
+            function hideSpinner() {
+                spinnerContainer.style.display = 'none';
+            }      
+            </script>
+        	<!-- / SPINNER -->
+        </body>
+    </html> 
+</apex:page>

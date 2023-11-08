@@ -1,0 +1,8 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId" controller="SQX_Announcement_Group" extends="compliancequest.SQX_Lightning_Base_Component" access="global" >
+    <aura:attribute name="recordId" type="String" description="holds the id of collaboration group"/>
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    <aura:if isTrue="{!v.recordId}">
+        <forceChatter:publisher context="RECORD" recordId="{!v.recordId}"/>
+        <forceChatter:feed type="Record" subjectId="{!v.recordId}"/>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="cqui_FindingResponse_buildresponse">
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CQUI Finding Response buildresponse</masterLabel>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="recordId" label="Enter Record Id " type="String" />
+            <property name="hideSave" label="Enter to hide save " type="Boolean" />
+            <property name="flowFormErrors" label="Form Errors " type="String" />
+            <propertyType name="T" extends="SObject" label="Input Type" description="Generic sObject data type used for input sObject properties" />
+            <property name="genericObjectType" type="{T}" label="Enter Generic Object Record"  />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

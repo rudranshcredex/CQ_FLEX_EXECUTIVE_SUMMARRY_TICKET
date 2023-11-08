@@ -1,0 +1,48 @@
+<template>
+    <template if:true={hasContact}>
+        <div class="slds-box slds-grid slds-wrap slds-theme_default">
+            <div>
+
+                <!-- Header Section -->
+                <div class="slds-align_absolute-left slds-text-heading_small slds-p-horizontal_medium slds-border_bottom">
+                    <span>{cqui_quick_links}</span>
+                </div>
+
+                
+                    <!-- Body Section -->
+                <div class="slds-m-around_medium">
+                    <div>
+                        <div>
+                            <ul class="slds-has-inline-block-links_space">
+                                <li>
+                                    <lightning-icon icon-name="standard:account" size="small"></lightning-icon>
+                                    <lightning-button variant="base" label={cqui_text_account_information}
+                                        onclick={handleAccountNavigation}
+                                        class="slds-m-left_x-small slds-text-body_regular"></lightning-button>
+                                </li>
+                                <li>
+                                    <lightning-icon icon-name="custom:custom22" size="small"></lightning-icon>
+                                    <lightning-button variant="base" label={cqui_submit_supplier_deviation}
+                                        onclick={handleClickSubmitSD}
+                                        class="slds-m-left_x-small slds-text-body_regular"></lightning-button>
+                                </li>
+                                <li>
+                                    <lightning-icon icon-name="custom:custom22" size="small"></lightning-icon>
+                                    <lightning-button variant="base" label={cqui_extend_supplier_deviation}
+                                        onclick={handleClickExtendSD}
+                                        class="slds-m-left_x-small slds-text-body_regular"></lightning-button>
+                                </li>
+                                <li>
+                                    <lightning-icon icon-name="custom:custom15" size="small"></lightning-icon>
+                                    <lightning-button variant="base" label={cqui_submit_supplier_interaction}
+                                        onclick={handleClickSubmitSI}
+                                        class="slds-m-left_x-small slds-text-body_regular"></lightning-button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

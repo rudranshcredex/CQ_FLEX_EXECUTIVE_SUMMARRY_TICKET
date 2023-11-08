@@ -1,0 +1,8 @@
+<!-------------------------------------------REVISION HISTORY---------------------------------------------
+ * 1.[FLEX-101] Documents - Submitted Document Rejected email template - Fields missing + email recipients
+--------------------------------------------REVISION HISTORY---------------------------------------------->
+<apex:component controller="CQ_FLEX_Controlled_Doc_Rejected" access="global">
+    <apex:attribute name="relatedToId" assignTo="{!targetObjectId}" type="String" description="ID of the record whose last approval comments to retrieve"/>
+    <b>Document Approver: </b> <apex:outputText value="{!Approvers[1]}"/><br/>
+    <b>Rejection comments: </b><apex:outputText value="{!Approvers[0]}"/><br/>
+</apex:component>

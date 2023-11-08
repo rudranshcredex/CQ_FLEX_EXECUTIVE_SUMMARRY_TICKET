@@ -1,0 +1,317 @@
+<template>
+    
+    <c-cq-record-form-container has-loaded={allDone} hide-save={hideSave} title={pageTitle} onsave={saveRecord} oncancel={cancelForm} onsaveandnew={saveAndNewForm} is-saving={isSaving}
+    main-obj={objInfo} form-errors={formErrors} lightning-icon="" save-and-new="true">
+        <div slot="sections" class="slds-col slds-size_1-of-1">
+                    
+                
+                   
+        <template if:true={sectionHider.expando_unique_id_1}>
+            <c-cq-record-form-section section-title={CQFLEX_INFORMATION} expando-unique-id="expando-unique-id-1" edit-heading="true" detail-heading="false">
+                <div slot="sectionsItem">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_NAME} value={v_NAME}
+                                            display-value={d_NAME} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Readonly">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__ACTIVE__C} value={v_COMPLIANCEQUEST__ACTIVE__C}
+                                            display-value={d_COMPLIANCEQUEST__ACTIVE__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__SQX_CONTROLLED_DOCUMENT__C} value={v_COMPLIANCEQUEST__SQX_CONTROLLED_DOCUMENT__C}
+                                            display-value={d_COMPLIANCEQUEST__SQX_CONTROLLED_DOCUMENT__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Required">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__REQUIRE_REFRESHER__C} value={v_COMPLIANCEQUEST__REQUIRE_REFRESHER__C}
+                                            display-value={d_COMPLIANCEQUEST__REQUIRE_REFRESHER__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__SQX_JOB_FUNCTION__C} value={v_COMPLIANCEQUEST__SQX_JOB_FUNCTION__C}
+                                            display-value={d_COMPLIANCEQUEST__SQX_JOB_FUNCTION__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Required">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__SQX_REFRESHER_ASSESSMENT__C} value={v_COMPLIANCEQUEST__SQX_REFRESHER_ASSESSMENT__C}
+                                            display-value={d_COMPLIANCEQUEST__SQX_REFRESHER_ASSESSMENT__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__LEVEL_OF_COMPETENCY__C} value={v_COMPLIANCEQUEST__LEVEL_OF_COMPETENCY__C}
+                                            display-value={d_COMPLIANCEQUEST__LEVEL_OF_COMPETENCY__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Required">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__REFRESHER_COMPETENCY__C} value={v_COMPLIANCEQUEST__REFRESHER_COMPETENCY__C}
+                                            display-value={d_COMPLIANCEQUEST__REFRESHER_COMPETENCY__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_CQ_FLEX_CLASSROOM_ASSESSMENT_REQUIRED__C} value={v_CQ_FLEX_CLASSROOM_ASSESSMENT_REQUIRED__C}
+                                            display-value={d_CQ_FLEX_CLASSROOM_ASSESSMENT_REQUIRED__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__REFRESHER_INTERVAL__C} value={v_COMPLIANCEQUEST__REFRESHER_INTERVAL__C}
+                                            display-value={d_COMPLIANCEQUEST__REFRESHER_INTERVAL__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_CQ_FLEX_ASSESSMENT_DOCUMENT_NUMBER__C} value={v_CQ_FLEX_ASSESSMENT_DOCUMENT_NUMBER__C}
+                                            display-value={d_CQ_FLEX_ASSESSMENT_DOCUMENT_NUMBER__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__DAYS_TO_COMPLETE_REFRESHER__C} value={v_COMPLIANCEQUEST__DAYS_TO_COMPLETE_REFRESHER__C}
+                                            display-value={d_COMPLIANCEQUEST__DAYS_TO_COMPLETE_REFRESHER__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_CQ_FLEX_REASON_ASSESSMENT_IS_NOT_NEEDED__C} value={v_CQ_FLEX_REASON_ASSESSMENT_IS_NOT_NEEDED__C}
+                                            display-value={d_CQ_FLEX_REASON_ASSESSMENT_IS_NOT_NEEDED__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__DAYS_IN_ADVANCE_TO_START_REFRESHER__C} value={v_COMPLIANCEQUEST__DAYS_IN_ADVANCE_TO_START_REFRESHER__C}
+                                            display-value={d_COMPLIANCEQUEST__DAYS_IN_ADVANCE_TO_START_REFRESHER__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__TRAINING_PROGRAM_STEP__C} value={v_COMPLIANCEQUEST__TRAINING_PROGRAM_STEP__C}
+                                            display-value={d_COMPLIANCEQUEST__TRAINING_PROGRAM_STEP__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__SKIP_REVISION_TRAINING__C} value={v_COMPLIANCEQUEST__SKIP_REVISION_TRAINING__C}
+                                            display-value={d_COMPLIANCEQUEST__SKIP_REVISION_TRAINING__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__SQX_INITIAL_ASSESSMENT__C} value={v_COMPLIANCEQUEST__SQX_INITIAL_ASSESSMENT__C}
+                                            display-value={d_COMPLIANCEQUEST__SQX_INITIAL_ASSESSMENT__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__SQX_REVISION_ASSESSMENT__C} value={v_COMPLIANCEQUEST__SQX_REVISION_ASSESSMENT__C}
+                                            display-value={d_COMPLIANCEQUEST__SQX_REVISION_ASSESSMENT__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Edit">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                            </div>
+                         
+                    </div>
+                </div>
+            </c-cq-record-form-section>
+        </template>
+                 
+            
+                
+                   
+        <template if:true={sectionHider.expando_unique_id_2}>
+            <c-cq-record-form-section section-title={CQFLEX_SYSTEM_INFORMATION} expando-unique-id="expando-unique-id-2" edit-heading="true" detail-heading="false">
+                <div slot="sectionsItem">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__ACTIVATION_DATE__C} value={v_COMPLIANCEQUEST__ACTIVATION_DATE__C}
+                                            display-value={d_COMPLIANCEQUEST__ACTIVATION_DATE__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Readonly">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__DEACTIVATION_DATE__C} value={v_COMPLIANCEQUEST__DEACTIVATION_DATE__C}
+                                            display-value={d_COMPLIANCEQUEST__DEACTIVATION_DATE__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Readonly">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__TRAINING_JOB_STATUS__C} value={v_COMPLIANCEQUEST__TRAINING_JOB_STATUS__C}
+                                            display-value={d_COMPLIANCEQUEST__TRAINING_JOB_STATUS__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Readonly">
+                                </c-cq-form-item>
+                                
+                            </div>
+                        
+                            
+                            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+                                    
+                                    
+                                <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__TRAINING_JOB_ERROR__C} value={v_COMPLIANCEQUEST__TRAINING_JOB_ERROR__C}
+                                            display-value={d_COMPLIANCEQUEST__TRAINING_JOB_ERROR__C} onvaluechanged={valueChanged} 
+                                            layout-behaviour="Readonly">
+                                </c-cq-form-item>
+                                
+                            </div>
+                         
+                    </div>
+                </div>
+            </c-cq-record-form-section>
+        </template>
+                 
+            
+                
+                   
+        <template if:true={sectionHider.expando_unique_id_3}>
+            <c-cq-record-form-section section-title={CQFLEX_CUSTOM_LINKS} expando-unique-id="expando-unique-id-3" edit-heading="true" detail-heading="false">
+                <div slot="sectionsItem">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                         
+                    </div>
+                </div>
+            </c-cq-record-form-section>
+        </template>
+                 
+            
+    
+        
+
+        </div>
+    </c-cq-record-form-container>
+</template>

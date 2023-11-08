@@ -1,0 +1,20 @@
+{"Word": {
+        "ConvertHyperlinks": true,
+        "ConvertBookmarks": "PRN_BOOKMARKS_NONE",
+        "DocumentPassword": "",
+        "Paper": {
+          "Orientation": "PRN_PAPER_ORIENT_DEFAULT",
+          "Size": "PRN_MSO_PAPER_DEFAULT",
+          "Width": 8.5,
+          "Height": 11
+        },
+        "Margin": {
+          "Customize": false,
+          "Left": 1,
+          "Top": 1,
+          "Right": 1,
+          "Bottom": 1
+        },
+        "ConversionMethod": "EPWF_CONVERSION_METHOD_OFFICE_OPTIMIZED",
+        "OfficeOptimizationMethod": "EPWF_OFFICE_OPTIMIZATION_METHOD_MORE_OPTIMIZED"
+      }}

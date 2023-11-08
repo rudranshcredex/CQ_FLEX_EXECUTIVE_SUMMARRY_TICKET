@@ -1,0 +1,25 @@
+<template>
+ 
+    <div if:true={allDone}>
+        <ul class="slds-button-group-row">
+            
+                
+                
+            <template if:true={visible.cqext__cqui_Assembleteam}>
+                <li class="slds-button-group-item">
+                    
+                    
+                    <lightning-button
+                        label={CQMG_ADVANCE_TO_D1}
+                        name="cqext__cqui_Assembleteam"
+                        onclick={invokeAction}
+                    ></lightning-button>
+                    
+                </li>
+            </template>
+                
+            
+        </ul>
+        
+    </div>
+</template>

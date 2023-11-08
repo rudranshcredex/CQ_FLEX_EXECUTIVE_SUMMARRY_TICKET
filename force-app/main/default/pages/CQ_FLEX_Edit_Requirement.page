@@ -1,0 +1,135 @@
+<!--********************************** Revision History ************************************************************
+*1.[FLEX-37]-Trainings - New field Department/Area field in Job function + Edit Requirement screen continued
+*2.[FLEX-69]:Trainings - HR Training Tool Integration - DTNs creation + New fields in Edit Requirement/Requirement screen
+*********************************** Revision History **************************************************************-->
+<apex:page standardcontroller="compliancequest__SQX_Controlled_Document__c" extensions="CQ_FLEX_Edit_Requirement_Controller" showHeader="false" sidebar="false" tabStyle="compliancequest__SQX_Controlled_Document__c" lightningStylesheets="false">
+    <style>
+        .myTable {
+        counter-reset: rowCounter;
+        }
+        .myTable .row {
+        counter-increment: rowCounter;
+        }
+        .myTable .row .counter::before {
+        content: counter(rowCounter);
+        }
+
+        .pbSubheader{
+        background-color:#e9eded !important;
+                Font: 14px -apple-system;
+                color:#181818 !important;
+        }
+        .bPageBlock .pbTitle 
+        {
+        font-weight:bold !important;
+        font-size: medium;
+        }
+        
+        .rg1 {background-color: lightblue; color:black; background-image:none}
+        .rg2 {background-color: white; color:black; background-image:none}
+        .SelectlistStyle {background-color: lightblue; color:black; font-size: 100%; background-image:none}
+        .myClass{
+        color:white !important;
+        background: #66b3ff !important;
+        }
+    </style> 
+    
+    <apex:form id="form">   
+        <apex:pageBlock id="details"  title="{!compliancequest__SQX_Controlled_Document__c.name}">  
+            <apex:pageMessages id="showmsg"></apex:pageMessages>
+            <apex:pageBlockButtons location="top">
+                <div class="slds-float_right">
+                    <b></b> 
+                     <apex:outputPanel id="op1"> 
+                        <apex:commandButton value="Close" styleClass="slds-button slds-button_neutral" action="{!cancel_goback}" status="Sataus" rerender="op1,op2"/>
+                    </apex:outputPanel>                   
+                    <apex:commandButton value="Save" styleClass="slds-button slds-button_brand"  action="{!processSelected}" reRender="showmsg" status="Sata"/>
+                    <apex:actionStatus id="Sata">
+                        <apex:facet name="start">
+                            <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.25; z-index: 1000; background-color: black;">
+                                &nbsp;
+                            </div>
+                            <div style="position: fixed; left: 0; top: 0; bottom: 0; right: 0; z-index: 1001; margin: 15% 50%">
+                                <div style="display: inline-block; padding: 2px; background-color: #fff; width: 350px;">
+                                    <img src="/img/loading.gif" style="float: left; margin: 8px;" />
+                                    <span style=" padding: 10px 0px;"><div>Please Wait until selected job functions are created......</div></span>
+                                </div>
+                            </div>
+                        </apex:facet>
+                    </apex:actionStatus>                    
+                   
+                </div>                             
+            </apex:pageBlockButtons>
+            <div class="slds-form-element__control">
+                <apex:inputText value="{!searchstring}" styleClass="slds-input" html-placeholder="Search Job Function/Area/Department">Search Job Function/Area/Department</apex:inputText> 
+                <apex:commandButton value="Search" styleClass="slds-button slds-button_neutral" action="{!searchAccounts}" reRender="details,table"/>                
+            </div>
+            <br/>             
+            
+            
+            <apex:pageBlockTable value="{!wrapJFList}" var="lnsWrap" styleClass="slds-table slds-table_cell-buffer slds-table_bordered slds-var-m-bottom_x-small" id="table" rowClasses="row">                   
+                <apex:slds />  
+                <apex:column styleClass="slds-truncate" value="{!lnsWrap.lns.Name}"/>
+                <apex:column >
+                    <apex:facet name="header">
+                        Area
+                    </apex:facet>
+                    &nbsp;&nbsp;<apex:outputText value="{!lnsWrap.lns.CQ_FLEX_Area__r.name}"/>
+                </apex:column>  
+                <apex:column value="{!lnsWrap.lns.CQ_FLEX_Department__c}"/>               
+                <apex:column >
+                    <apex:facet name="header">
+                        ENABLE REQUIREMENT
+                    </apex:facet>
+                    &nbsp;&nbsp;<apex:inputCheckbox value="{!lnsWrap.selected}" id="inputId"/>
+                </apex:column>   
+                 <apex:column >
+                    <apex:facet name="header">
+                        ENABLE REFRESHER
+                    </apex:facet>
+                    &nbsp;&nbsp;<apex:inputCheckbox value="{!lnsWrap.selected2}" id="inputId2"/>
+                </apex:column>   
+                
+            </apex:pageBlockTable> 
+            
+            <br/>
+            <div class="slds-align_absolute-center">            
+                <!--apex:commandButton value="First" styleClass="slds-button slds-button--brand" action="{!FirstPage}" disabled="{!prev}" reRender="details,table" /-->
+                <apex:commandButton value="Previous" styleClass="slds-button slds-button_neutral" action="{!previous}" disabled="{!prev}" reRender="details,table" />
+                <apex:commandButton value="Next" styleClass="slds-button slds-button_neutral" action="{!next}" disabled="{!nxt}" reRender="details,table" />
+                <!--apex:commandButton value="End" styleClass="slds-button slds-button--brand" action="{!LastPage}" disabled="{!nxt}" reRender="details,table" /-->
+            </div>
+        </apex:pageBlock> 
+        
+        
+        <apex:pageBlock id="pb">
+                
+                <apex:pageBlockSection title="Default Values" columns="2" id="editForm">                   
+                    
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border" required="true" value="{!Defaultvalue.compliancequest__Level_of_Competency__c}" >
+                        <apex:actionSupport event="onchange" action="{!onChangeFnCall}" reRender="editForm" />
+                    </apex:inputField>                                               
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border" required="true" value="{!Defaultvalue.compliancequest__Refresher_Competency__c}" />
+                    
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border" rendered="{!disCAR}" value="{!Defaultvalue.CQ_FLEX_Classroom_Assessment_Required__c}" >
+                        <apex:actionSupport event="onchange" action="{!onChangeCARCall}" reRender="editForm" />
+                    </apex:inputField>
+                    <apex:outputText rendered="{!if(disCAR==true,false,true)}" />   
+                    
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border" required="true" html-placeholder="30" value="{!Defaultvalue.compliancequest__Refresher_Interval__c}" />
+                    
+                    <apex:outputText rendered="{!if((disADN==true||disRAN==true),false,true)}" /> 
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border"  rendered="{!disADN}" value="{!Defaultvalue.CQ_FLEX_Assessment_Document_Number__c}" />                                        
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border" rendered="{!disRAN}" value="{!Defaultvalue.CQ_FLEX_Reason_Assessment_is_not_needed__c}" />                    
+                    
+                    
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border" required="true" value="{!Defaultvalue.compliancequest__Days_to_Complete_Refresher__c}" />                        
+                    
+                    <apex:outputText />          
+                    <apex:inputField styleClass="cq-input slds-input slds-combobox__input has-custom-height has-custom-border" required="true" value="{!Defaultvalue.compliancequest__Days_in_Advance_to_Start_Refresher__c}" />
+                    
+                </apex:pageBlockSection>
+            
+        </apex:pageBlock>
+    </apex:form>    
+</apex:page>

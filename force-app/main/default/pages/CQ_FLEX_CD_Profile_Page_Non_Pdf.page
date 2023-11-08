@@ -1,0 +1,422 @@
+<!-------------------------------------------REVISION HISTORY---------------------------------------------
+ [FLEX-5] Documents - Header/Footer/Coverpage/PDF Stamping/Non-PDF Stamping
+ [FLEX-104] Documents - Header/Footer/Coverpage/PDF Stamping/Non-PDF Stamping continued 
+ [FLEX-119] Documents - Obsolescence Approval Comments field + Agile Documents + Qualified Trainers
+ [FLEX-138] Documents - PDF Stamping / Non PDF Stamping, Secondary Format Setting (Effective Date)
+--------------------------------------------REVISION HISTORY---------------------------------------------->
+<apex:page renderAs="{!IF($CurrentPage.Parameters.RenderAs == 'pdf', 'advanced_pdf', null)}" standardController="compliancequest__SQX_Controlled_Document__c" extensions="compliancequest.SQX_Extension_Controlled_Document,CQ_CCC_Extension_Controlled_Document" title="{!compliancequest__SQX_Controlled_Document__c.Name}" doctype="html-5.0" applyBodyTag="false" showHeader="false" sidebar="false" standardStylesheets="true">
+    
+    <apex:variable var="renderAsPdf" value="{!$CurrentPage.Parameters.RenderAs == 'pdf'}" />
+    <apex:variable var="isLandscape" value="{!$CurrentPage.Parameters.Mode == 'LS'}" />
+    <apex:variable var="enableOnlyPgNo" value="{!enableOnlyPgNo}" />
+    <apex:variable var="proc" value="{! COOrCDLatestApprovalProcess }" />
+    <apex:variable var="activeReq" value="{!DocActiveRequirements}" />
+    
+    <head>
+        <style>            
+            @page {
+            size : {!IF(isLandscape, 'A4 landscape', 'A4 portrait')};
+            @top-center {
+            content: element(header);
+            }
+            @bottom-left {
+            content: element(footer);
+            }
+            margin: {!IF(isLandscape, '0.4in .94in 0.2in .94in', '0.5in 0.42in 0.4in 0.45in')};
+            
+            }
+            .fs {
+            -fs-table-paginate: paginate;           
+             }
+           
+            
+            
+            
+            .label {  text-align: right; }
+            .fieldValue {padding-left:3px;}            
+            .subSection {
+            background-color: transparent;
+            }            
+            .subSection h3 { font-size: 1.2em; padding: 5px 12px; }            
+            
+            .noRecordToDisplay { padding: 5px 0px; border-width: 1px 0; border-top-color: #4a4a56; border-bottom-color:#d4dadc; border-style:solid; }            
+            .top { text-align: left;  margin-bottom: 10px; width:100%}            
+            .logo{margin:0px 0px 10px 0px !important; border: 1px solid black; width:100%}
+            
+            
+            
+            .hidden{display:none}
+            
+            
+            .logo-image{text-align: left; margin: 1px 0px 0px 10px !important; width:70%}
+            .pagenumber:before {
+            content: counter(page);
+            text-align: right;
+            }
+            .pagecount:before {
+            content: counter(pages);
+            text-align: right;
+            }
+            .thead_style
+            {
+            height:{!IF(isLandscape, '140px', '140px')}
+            
+            }            
+            .tfoot_style
+            {
+            height:{!IF(isLandscape, '40px', '60px')}
+            }
+            table td { 
+            word-break: break-all;            
+            }
+            
+            
+        </style>
+    </head>
+    
+    <body>
+        <div style="position: fixed;top: 0mm;width: 100%;height: 100px;">            
+            <table  width="100%" border="2px" cellpadding="3px" cellspacing="0">
+                
+                
+                <tr>
+                    <td width="40%" border="10px"><apex:image width="50%" url="{!$Resource.Flex_Logo}"/></td>
+                    <td width="60%" border="10px">
+                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Document_Number__c.Label}</b> -                              
+                        {!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Number__c}                                
+                        <br/>
+                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Revision__c.Label}</b> - {!compliancequest__SQX_Controlled_Document__c.compliancequest__Revision__c}
+                        <br/>                             
+                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Org_Site__c.Label}</b> - {!compliancequest__SQX_Controlled_Document__c.compliancequest__Org_Site__c}
+                    </td>
+                    
+                </tr>
+                <tr>
+                    <td colspan = "2" border="10px">  
+                        <b>{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Title__c.Label}</b> - {!compliancequest__SQX_Controlled_Document__c.compliancequest__Title__c}
+                    </td>                            
+                </tr> 
+                
+                
+            </table>
+        </div>
+        
+        <table class="fs">
+            
+            <thead>
+                <tr>
+                    <td  class="thead_style">
+                    </td>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td>        
+                        <div>
+                            
+                            <!-- Detail layout Section -->        
+                            <div class="subSection" >
+                                <apex:pageBlock >
+                                    <table cellpadding="3px" width="100%" cellspacing="0">                       
+                                        <tr>
+                                            <td width="30%">
+                                                <apex:outputLabel value="{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.CQ_FLEX_Business_Unit__c.Label}" />
+                                            </td>
+                                            <td width="1%">:</td>
+                                            <td width="69%">
+                                                <apex:outputText value="{!compliancequest__SQX_Controlled_Document__c.CQ_FLEX_Business_Unit__c}"/>
+                                            </td>
+                                        </tr>                                        
+                                        <tr>
+                                            <td width="30%">
+                                                <apex:outputLabel value="{!$Label.compliancequest__CQ_UI_Controlled_Doc_Author}" />
+                                            </td>
+                                            <td width="1%">:</td>
+                                            <td width="69%">
+                                                <apex:outputText value="{!compliancequest__SQX_Controlled_Document__c.Owner.name}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%">
+                                                <apex:outputLabel value="{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.CQ_FLEX_Parent_Category__c.Label}" />
+                                            </td>
+                                            <td width="1%">:</td>
+                                            <td width="69%">
+                                                <apex:outputText styleClass="left-gap" value="{!compliancequest__SQX_Controlled_Document__c.CQ_FLEX_Parent_Category__c}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%">
+                                                <apex:outputLabel value="{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Document_Category__c.Label}"/>                               
+                                            </td>
+                                            <td width="1%">:</td>
+                                            <td width="69%">
+                                                <apex:outputField value="{!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Category__c}"/>                               
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td width="30%">
+                                                <apex:outputLabel value="{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Document_Status__c.Label}"/>                               
+                                            </td>
+                                            <td width="1%">:</td>
+                                            <td width="69%">
+                                                <apex:outputField value="{!compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c}"/>                               
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </apex:pageBlock>
+                            </div>
+                            
+                            <!-- Document Approval History -->
+                            <div class="subSection">
+                                <apex:pageBlock title="{!$Label.compliancequest__CQ_UI_Controlled_Document_Approval_History}" >     
+                                    <apex:pageBlockSection rendered="{!ISNULL(proc.Instance.StepsAndWorkItems)}" columns="1">
+                                        <p class="noRecordToDisplay" >{!$Label.compliancequest__CQ_UI_No_records_to_display}</p>
+                                    </apex:pageBlockSection>
+                                    <apex:outputPanel rendered="{!NOT(ISNULL(proc.Instance.StepsAndWorkItems))}">                    
+                                        <table id="approvalHistoryTable" class="list" border="1px" cellpadding="3px"  width="100%" cellspacing="0">
+                                            <tr class="headerRow">
+                                                <th scope="col">{!$Label.CQ_CCC_UI_Step}</th>
+                                                <th scope="col">{!$Label.CQ_CCC_UI_Approver}</th>
+                                                <th scope="col">{!$Label.CQ_CCC_UI_Date_Approved}</th>
+                                            </tr>
+                                            <apex:repeat var="proc" value="{!proc}" rows="1" >
+                                                <apex:repeat var="step" value="{! proc.Instance.StepsAndWorkItems }" rendered="{!NOT(ISNULL(proc))}">
+                                                    <apex:outputText rendered="{!step.StepStatus == 'Approved'}" >
+                                                        <tr>
+                                                            <td width="20%">
+                                                                <apex:outputField value="{!step.ProcessNode.Name}" />
+                                                            </td>
+                                                            <td width="40%">
+                                                                <apex:outputField value="{!step.Actor.Name}" />
+                                                            </td>
+                                                            <td width="40%" >
+                                                                <apex:outputText value="{0, date, dd MMM yyyy, HH:mm z}" rendered="{!NOT(ISNULL(CCCCoverPageDateTimeFormat))}">
+                                                                    <apex:param value="{!step.CreatedDate}"/>
+                                                                </apex:outputText>
+                                                                <apex:outputField value="{! step.CreatedDate }" rendered="{!ISNULL(CCCCoverPageDateTimeFormat)}"/>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:outputText>
+                                                </apex:repeat>
+                                            </apex:repeat>
+                                        </table>
+                                    </apex:outputPanel>                
+                                </apex:pageBlock>
+                            </div>
+                            
+                            <div class="subSection">
+                                
+                                <apex:pageBlock Title="{!$Label.compliancequest__CQ_UI_Controlled_Document_Revision_History}" rendered="{! LatestRevisions.size > 0}"> 
+                                    <apex:pageBlockTable value="{!LatestRevisions}" var="doc" border="1px" cellpadding="3px" align="center" width="100%">
+                                        
+                                        <apex:column value="{! doc.compliancequest__Revision__c }" width="10%">
+                                            <apex:facet name="header">{!$Label.compliancequest__CQ_UI_Controlled_Doc_Revision}</apex:facet>
+                                        </apex:column>
+                                        
+                                        
+                                        
+                                        <apex:column value="{!doc.compliancequest__Changes__c}" width="60%">
+                                            <apex:facet name="header">{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Changes__c.Label}</apex:facet>
+                                        </apex:column>
+                                        
+                                        <apex:column width="30%">
+                                            <apex:outputText value="{!CCCCoverPageDateFormat}" rendered="{!NOT(ISNULL(CCCCoverPageDateFormat))}"> 
+                                                <apex:param value="{! doc.compliancequest__Effective_Date__c }"/> 
+                                            </apex:outputText> 
+                                            <apex:outputField value="{! doc.compliancequest__Effective_Date__c }" rendered="{!ISNULL(CCCCoverPageDateFormat)}"/>
+                                            <apex:facet name="header">{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Effective_Date__c.Label}</apex:facet>
+                                        </apex:column>
+                                        
+                                    </apex:pageBlockTable>
+                                </apex:pageBlock>
+                            </div>
+                            
+                            
+                            
+                            <div class="subSection" id="relatedDocuments">
+                                
+                                <apex:pageBlock title="{!$Label.compliancequest__CQ_UI_Related_Documents}">
+                                    
+                                    <apex:outputPanel rendered="{!NOT(ISNULL(compliancequest__SQX_Controlled_Document__c.compliancequest__Related_Documents__r))}">                    
+                                        <table border="1px" cellpadding="3px"  width="100%" cellspacing="0">
+                                            <tr class="headerRow">
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Related_Document__c.Fields.compliancequest__Referenced_Document__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Related_Document__c.Fields.compliancequest__Referenced_Document_Title__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Related_Document__c.Fields.CQ_FLEX_Referenced_Document_Status__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Related_Document__c.Fields.CQ_FLEX_Referenced_Document_Parent_Doc__c.Label}</th>
+                                            </tr>
+                                            <apex:repeat var="rDoc" value="{!compliancequest__SQX_Controlled_Document__c.compliancequest__Related_Documents__r}" >
+                                                <tr>
+                                                    <td width="20%">
+                                                        <apex:outputlink value="{!$Setup.compliancequest__SQX_Custom_Settings_Public__c.compliancequest__Org_Base_URL__c}/apex/compliancequest__SQX_View_Controlled_Document?id={!rDoc.compliancequest__Referenced_Document__r.Id}">{!rDoc.compliancequest__Referenced_Document__r.Name}</apex:outputlink>
+                                                    </td>
+                                                    <td width="50%">
+                                                        {!rDoc.compliancequest__Referenced_Document__r.compliancequest__Title__c}
+                                                    </td>
+                                                    <td width="20%" >
+                                                        {!rDoc.compliancequest__Referenced_Document__r.compliancequest__Document_Status__c}       
+                                                    </td>
+                                                    
+                                                    <td width="10%">
+                                                        {!rDoc.CQ_FLEX_Referenced_Document_Parent_Doc__c}
+                                                    </td>
+                                                </tr>
+                                                
+                                            </apex:repeat>
+                                        </table>
+                                    </apex:outputPanel>                
+                                </apex:pageBlock>
+                                
+                            </div>
+                            
+                            <div class="subSection" id="ReferencedByDocument">
+                                <apex:outputPanel rendered="{! ReferencedByDocuments.size > 0}">  
+                                    <apex:pageBlock title="{!$Label.CQ_Flex_Referenced_By_Documents}">
+                                        
+                                        
+                                        <table border="1px" cellpadding="3px"  width="100%" cellspacing="0">
+                                            <tr class="headerRow">
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.compliancequest__Document_Number__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Related_Document__c.Fields.compliancequest__Controlled_Document_Title__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Related_Document__c.Fields.CQ_FLEX_Controlled_Document_Status__c.Label}</th>
+                                            </tr>
+                                            <apex:repeat var="rDoc" value="{!ReferencedByDocuments}">
+                                                <tr>
+                                                    <td width="20%">
+                                                        <apex:outputlink value="{!$Setup.compliancequest__SQX_Custom_Settings_Public__c.compliancequest__Org_Base_URL__c}/apex/compliancequest__SQX_View_Controlled_Document?id={!rDoc.compliancequest__Controlled_Document__c}">{!rDoc.compliancequest__Controlled_Document_Number__c}</apex:outputlink>
+                                                    </td>
+                                                    <td width="60%">
+                                                        {!rDoc.compliancequest__Controlled_Document_Title__c}
+                                                    </td>
+                                                    <td width="20%" >
+                                                        {!rDoc.CQ_FLEX_Controlled_Document_Status__c}       
+                                                    </td>
+                                                    
+                                                </tr>
+                                                
+                                            </apex:repeat>
+                                        </table>
+                                        
+                                    </apex:pageBlock>
+                                </apex:outputPanel>     
+                                
+                            </div>
+                            
+                            
+                            
+                            <div class="subSection" id="regulatoryRequirement">
+                                <apex:outputPanel rendered="{!NOT(ISNULL(compliancequest__SQX_Controlled_Document__c.CQ_FLEX_SQX_Related_Documents__r))}">                    
+                                    <apex:pageBlock title="Regulatory Requirement">
+                                        
+                                        <table border="1px" cellpadding="3px"  width="100%" cellspacing="0">
+                                            <tr class="headerRow">
+                                                <th scope="col">{!$ObjectType.CQ_FLEX_SQX_Related_Document_Junction_Ob__c.Fields.CQ_FLEX_Criterion_Requirement_Standard__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.CQ_FLEX_SQX_Related_Document_Junction_Ob__c.Fields.CQ_FLEX_Criterion_Requirement_Section__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.CQ_FLEX_SQX_Related_Document_Junction_Ob__c.Fields.CQ_FLEX_Criterion_Requirement_SubSection__c.Label}</th>
+                                                <th scope="col">{!$ObjectType.CQ_FLEX_SQX_Related_Document_Junction_Ob__c.Fields.CQ_FLEX_Criterion_Requirement_Topic__c.Label}</th>
+                                            </tr>
+                                            <apex:repeat var="rDoc" value="{!compliancequest__SQX_Controlled_Document__c.CQ_FLEX_SQX_Related_Documents__r}">
+                                                <tr>
+                                                    <td width="20%">
+                                                        {!rDoc.CQ_FLEX_Criterion_Requirement_Standard__c}  
+                                                    </td>
+                                                    <td width="20%">
+                                                        {!rDoc.CQ_FLEX_Criterion_Requirement_Section__c}
+                                                    </td>
+                                                    <td width="20%" >
+                                                        {!rDoc.CQ_FLEX_Criterion_Requirement_SubSection__c}
+                                                    </td>
+                                                    
+                                                    <td width="40%">
+                                                        {!rDoc.CQ_FLEX_Criterion_Requirement_Topic__c}
+                                                    </td>
+                                                </tr>
+                                                
+                                            </apex:repeat>
+                                        </table>
+                                    </apex:pageBlock>
+                                </apex:outputPanel>
+                            </div>
+                            
+                            <!-- Reason For Obsolescence -->
+                            <div class="subSection" id="ReasonForObsolescenceByDocument">
+                                <apex:outputPanel rendered="{! AND(ReasonForObsolescenceByDocuments.size > 0, OR(compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c =='Pre-Expire',compliancequest__SQX_Controlled_Document__c.compliancequest__Document_Status__c=='Obsolete'))}">  
+                                    <apex:pageBlock title="{!$Label.CQ_FLEX_Reason_for_Obsolescence}">
+                                        
+                                        
+                                        <table border="1px" cellpadding="3px"  width="100%" cellspacing="0">
+                                            <tr class="headerRow">
+                                                <th scope="col">{!$ObjectType.compliancequest__SQX_Controlled_Document__c.Fields.Name.Label}</th>
+                                                <th scope="col">{!$ObjectType.CQ_FLEX_SQX_Obsolescence__c.Fields.CQ_FLEX_Reason_for_Obsolescence__c.Label}</th>
+                                                
+                                            </tr>
+                                            <apex:repeat var="rDoc" value="{!ReasonForObsolescenceByDocuments}">
+                                                <tr>
+                                                    <td width="20%">
+                                                        <apex:outputlink value="{!$Setup.compliancequest__SQX_Custom_Settings_Public__c.compliancequest__Org_Base_URL__c}/apex/compliancequest__SQX_View_Controlled_Document?id={!rDoc.CQ_FLEX_SQX_Controlled_Document__c}">{!rDoc.CQ_FLEX_SQX_Controlled_Document__r.Name}</apex:outputlink>
+                                                    </td>
+                                                    <td width="60%">
+                                                        {!rDoc.CQ_FLEX_Reason_for_Obsolescence__c}
+                                                    </td>
+                                                    
+                                                    
+                                                </tr>
+                                                
+                                            </apex:repeat>
+                                        </table>
+                                        
+                                    </apex:pageBlock>
+                                </apex:outputPanel>     
+                                
+                            </div>
+                            
+                            
+                        </div>
+                        
+                    </td>
+                </tr>
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                    <td  class="tfoot_style">
+                        <!--place holder for the fixed-position header-->                   
+                        
+                    </td>
+                </tr>
+            </tfoot>
+            
+        </table>
+        
+        <div style="position: fixed;bottom: 6mm;width: 100%;height: 40px;">
+            
+            
+            
+            <apex:outputPanel rendered="{!not(enableOnlyPgNo)}">
+                <table  width="100%" style='border-top: 2px solid black;' cellpadding="3px" cellspacing="0">
+                    
+                    <tr>
+                        <td style='text-align: left;' width="80%">  
+                            <b>COMPANY CONFIDENTIAL</b><br/>This Document is controlled in EQMS. All Copies (electronic or printed) are considered uncontrolled.
+                        </td>
+                        
+                        <td style="text-align:right;" width="20%">Page <span class="pagenumber"/> of <span class="pagecount"/></td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!(enableOnlyPgNo)}">
+                <table  width="100%" style='border-top: 2px solid black;' cellpadding="3px" cellspacing="0">
+                    
+                    <tr>
+                        <td style="text-align:right;">Page <span class="pagenumber"/> of <span class="pagecount"/></td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+            
+        </div>
+        
+            
+    </body>    
+</apex:page>

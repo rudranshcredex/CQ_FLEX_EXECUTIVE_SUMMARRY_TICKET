@@ -1,0 +1,25 @@
+<template>
+ 
+    <div if:true={allDone}>
+        <ul class="slds-button-group-row">
+            
+                
+                
+            <template if:true={visible.cqext__cqui_Submitforapproval}>
+                <li class="slds-button-group-item">
+                    
+                    
+                    <lightning-button
+                        label={CQFLEX_SUBMIT_FOR_APPROVAL}
+                        name="cqext__cqui_Submitforapproval"
+                        onclick={invokeAction}
+                    ></lightning-button>
+                    
+                </li>
+            </template>
+                
+            
+        </ul>
+        
+    </div>
+</template>

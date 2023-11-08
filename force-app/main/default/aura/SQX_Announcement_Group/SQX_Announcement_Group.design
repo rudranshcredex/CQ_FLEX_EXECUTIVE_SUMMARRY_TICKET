@@ -1,0 +1,3 @@
+<design:component>
+    <design:attribute name="recordId" label="Group Id" description="Collaboration Group Id to show in the feed"  />
+</design:component>

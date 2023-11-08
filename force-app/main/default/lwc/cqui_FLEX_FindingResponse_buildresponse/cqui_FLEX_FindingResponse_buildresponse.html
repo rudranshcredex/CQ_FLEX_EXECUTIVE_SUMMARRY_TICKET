@@ -1,0 +1,136 @@
+<template>
+
+    <c-cq-record-form-container has-loaded={allDone} hide-save="true" title={pageTitle} onsave={saveRecord}
+        oncancel={cancelForm} is-saving={isSaving} main-obj={objInfo} form-errors={formErrors} save-label={labels.save}
+        cancel-label={labels.cancel} lightning-icon="">
+        <div slot="sections" class="slds-col slds-size_1-of-1">
+
+
+
+            <template if:true={sectionHider.expando_unique_id_1}>
+
+                <div slot="sectionsItem" style="padding:8px">
+                    <div class="slds-grid slds-gutters slds-wrap" style="margin-top: 20px">
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1">
+                            <div style="padding: 4px;background-color: rgb(243, 243, 243);border-color: #a8b7c7;">
+                                <label for="Finding Number"><strong><a data-id ={v_COMPLIANCEQUEST__SQX_FINDING__C} onclick={handleClick} target="_blank">{v_COMPLIANCEQUEST__FINDING_NUMBER__C}</a></strong></label>
+                            </div>
+
+                        </div>
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+
+
+                            <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__FINDING_TITLE__C}
+                                value={v_COMPLIANCEQUEST__FINDING_TITLE__C}
+                                display-value={d_COMPLIANCEQUEST__FINDING_TITLE__C} onvaluechanged={valueChanged}
+                                layout-behaviour="Readonly">
+                            </c-cq-form-item>
+
+                        </div>
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+
+
+                            <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__FINDING_TYPE__C}
+                                value={v_COMPLIANCEQUEST__FINDING_TYPE__C}
+                                display-value={d_COMPLIANCEQUEST__FINDING_TYPE__C} onvaluechanged={valueChanged}
+                                layout-behaviour="Readonly">
+                            </c-cq-form-item>
+
+                        </div>
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1">
+
+
+                            <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__FINDING_DESCRIPTION__C}
+                                value={v_COMPLIANCEQUEST__FINDING_DESCRIPTION__C}
+                                display-value={d_COMPLIANCEQUEST__FINDING_DESCRIPTION__C} onvaluechanged={valueChanged}
+                                layout-behaviour="Edit">
+                            </c-cq-form-item>
+
+                        </div>
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+
+                            <div style="padding: 5px;">
+                            <label for="Finding Number"><strong><a data-id ={v_COMPLIANCEQUEST__SQX_FINDING_RESPONSE_ID__C} onclick={handleClick} target="_blank">{CQUI_RESPONSE_DETAILS}
+                              <span style="position:absolute;margin: -2px 0px 0px 0.5rem;">
+                                <lightning-icon
+                                  icon-name="utility:new_window"
+                                  alternative-text="Navigate"
+                                  title="Navigate to response"
+                                  size="xx-small"
+                                ></lightning-icon>
+                              </span>
+                            </a></strong></label>
+                            </div>
+                        </div>
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+
+
+                            <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__EXTERNAL_REFERENCE_NUMBER__C}
+                                value={v_COMPLIANCEQUEST__EXTERNAL_REFERENCE_NUMBER__C}
+                                display-value={d_COMPLIANCEQUEST__EXTERNAL_REFERENCE_NUMBER__C}
+                                onvaluechanged={valueChanged} layout-behaviour="Required">
+                            </c-cq-form-item>
+
+                        </div>
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-1">
+
+
+                            <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__RESPONSE_SUMMARY__C}
+                                value={v_COMPLIANCEQUEST__RESPONSE_SUMMARY__C}
+                                display-value={d_COMPLIANCEQUEST__RESPONSE_SUMMARY__C} onvaluechanged={valueChanged}
+                                layout-behaviour="Edit">
+                            </c-cq-form-item>
+
+                        </div>
+
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+
+
+                            <c-cq-form-item class="cq-form-item"
+                                field={f_COMPLIANCEQUEST__REQUIRES_FOLLOW_UP_RESPONSE__C}
+                                value={v_COMPLIANCEQUEST__REQUIRES_FOLLOW_UP_RESPONSE__C}
+                                display-value={d_COMPLIANCEQUEST__REQUIRES_FOLLOW_UP_RESPONSE__C}
+                                onvaluechanged={valueChanged} layout-behaviour="Edit">
+                            </c-cq-form-item>
+
+                        </div>
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+
+
+                            <c-cq-form-item class="cq-form-item" field={f_COMPLIANCEQUEST__DUE_DATE__C}
+                                value={v_COMPLIANCEQUEST__DUE_DATE__C} display-value={d_COMPLIANCEQUEST__DUE_DATE__C}
+                                onvaluechanged={valueChanged} layout-behaviour="Edit">
+                            </c-cq-form-item>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </template>
+            <c-cq-record-form-section expando-unique-id="expando-unique-id-1">
+                <div slot="sectionsItem">
+                    <div class="slds-grid slds-gutters slds-wrap">
+                        <c-cq-file class="cq-form-grid" record-id={recordId} style="width: 100%"></c-cq-file>
+                    </div>
+                </div>
+            </c-cq-record-form-section>
+
+        </div>
+    </c-cq-record-form-container>
+</template>

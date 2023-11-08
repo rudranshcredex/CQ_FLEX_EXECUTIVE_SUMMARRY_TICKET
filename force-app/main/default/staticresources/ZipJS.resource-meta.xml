@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
+    <cacheControl>Private</cacheControl>
+    <contentType>application/x-zip-compressed</contentType>
+    <description>JS for compressing and decompressing zip files. It has been designed to handle large amounts
+of data larger than 4GB with Zip64, split zip files and data encryption.</description>
+</StaticResource>
